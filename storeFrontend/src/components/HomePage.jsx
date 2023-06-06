@@ -1,8 +1,8 @@
 export default function HomePage() {
-  console.log("hi");
   return (
     <>
-      <h1>Test</h1>
+      <h1>Welcome to Recycle Items</h1>
+      <h2>Location for all things needed to be gone</h2>
     </>
   );
 }

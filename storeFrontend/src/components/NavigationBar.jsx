@@ -1,6 +1,6 @@
 import { useWindowSize } from "@uidotdev/usehooks";
 import { Toolbar, ButtonGroup, Button, AppBar } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import "@github/details-menu-element";
 import viteLogo from "/vite.svg";
 import "./NavigationBar.css";
@@ -20,8 +20,25 @@ export default function NavigationBar() {
                   backgroundColor: "#FEFAE0",
                   border: "none",
                 }}
+                component={Link}
+                to="/Discover"
               >
-                Products
+                {" "}
+                Discover{" "}
+              </Button>
+              <Button
+                className="navButtons"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  backgroundColor: "#FEFAE0",
+                  border: "none",
+                }}
+                component={Link}
+                to="/MyItems"
+              >
+                {" "}
+                My Items{" "}
               </Button>
             </ButtonGroup>
           )}
@@ -42,8 +59,26 @@ export default function NavigationBar() {
                 class="dropdown-menu"
                 style={{ backgroundColor: "white" }}
               >
-                <Button sx={{ color: "black", textAlign: "center" }}>
-                  Products
+                <Button
+                  sx={{ color: "black", textAlign: "center" }}
+                  component={Link}
+                  to={"/Home"}
+                >
+                  Home
+                </Button>
+                <Button
+                  sx={{ color: "black", textAlign: "center" }}
+                  component={Link}
+                  to={"/Discover"}
+                >
+                  Discover
+                </Button>
+                <Button
+                  sx={{ color: "black", textAlign: "center" }}
+                  component={Link}
+                  to={"/MyItems"}
+                >
+                  My Items
                 </Button>
               </details-menu>
             </details>
