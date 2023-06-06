@@ -38,7 +38,7 @@ export default function NavigationBar() {
                   border: "none",
                 }}
                 component={Link}
-                to="/Discover"
+                to="/navigation/discover"
               >
                 {" "}
                 Discover{" "}
@@ -52,7 +52,7 @@ export default function NavigationBar() {
                   border: "none",
                 }}
                 component={Link}
-                to="/MyItems"
+                to="/navigation/myitems"
               >
                 My Items
               </Button>
@@ -72,15 +72,6 @@ export default function NavigationBar() {
               ) : (
                 <LoginButton />
               )}
-              <Button
-                className="navButtons"
-                sx={{
-                  fontWeight: "bold",
-                  color: "black",
-                  backgroundColor: "#FEFAE0",
-                  border: "none",
-                }}
-              ></Button>
             </ButtonGroup>
           )}
           {size.width < 600 && (
@@ -103,21 +94,21 @@ export default function NavigationBar() {
                 <Button
                   sx={{ color: "black", textAlign: "center" }}
                   component={Link}
-                  to={"/Home"}
+                  to={"/navigation/home"}
                 >
                   Home
                 </Button>
                 <Button
                   sx={{ color: "black", textAlign: "center" }}
                   component={Link}
-                  to={"/Discover"}
+                  to={"/navigation/discover"}
                 >
                   Discover
                 </Button>
                 <Button
                   sx={{ color: "black", textAlign: "center" }}
                   component={Link}
-                  to={"/MyItems"}
+                  to={"/navigation/myitems"}
                 >
                   My Items
                 </Button>

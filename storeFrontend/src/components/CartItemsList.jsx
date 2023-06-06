@@ -15,14 +15,13 @@ export default function CartItems() {
     {
       product: "Hat",
       price: 15,
-      quantity: 3,
+      quantity: 5,
     },
   ];
   const totalPrice = () => {
     items.map(({ price, quantity }) => {
       total += price * quantity;
     });
-    console.log(total);
   };
   totalPrice();
   return (

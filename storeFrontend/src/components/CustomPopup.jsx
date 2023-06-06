@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const CustomPopup = (props) => {
   const [show, setShow] = useState(false);
 
-  const closeHandler = (e) => {
+  const closeHandler = () => {
     setShow(false);
     props.onClose(false);
   };
@@ -12,7 +12,6 @@ const CustomPopup = (props) => {
   useEffect(() => {
     setShow(props.show);
   }, [props.show]);
-
   return (
     <div
       style={{
@@ -36,6 +35,7 @@ CustomPopup.propTypes = {
   title: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  children: PropTypes.object,
 };
 
 export default CustomPopup;
