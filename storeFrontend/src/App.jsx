@@ -8,14 +8,14 @@ import Redirect from "./components/redirect";
 function App() {
   return (
     <BrowserRouter>
-        <Routes>
-    <Route path="/" element={<Redirect/>} />
-    <Route path="/navigation" element={<NavigationBar />}>
-      <Route path="home" element={<HomePage />} />
-      <Route path="discover" element={<Discover />} />
-      <Route path="myitems" element={<MyItems />} />
-    </Route>
-  </Routes>
+      <Routes>
+        <Route path="/" element={<Redirect />} />
+        <Route path="/navigation" element={<NavigationBar />}>
+          <Route path="home" element={<HomePage />} />
+          <Route path="discover" element={<Discover />} />
+          <Route path="myitems" element={<MyItems />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }
