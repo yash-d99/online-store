@@ -1,11 +1,20 @@
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Toolbar, ButtonGroup, Button, AppBar } from "@mui/material";
+import { Toolbar, ButtonGroup, Button, AppBar, Box } from "@mui/material";
 import { Outlet, Link } from "react-router-dom";
+import { useState } from "react";
+import CustomPopup from "./CustomPopup";
 import "@github/details-menu-element";
 import viteLogo from "/vite.svg";
 import "./NavigationBar.css";
+import "reactjs-popup/dist/index.css";
+import CartItems from "./CartItemsList";
 export default function NavigationBar() {
   const size = useWindowSize();
+  const [visibility, setVisibility] = useState(false);
+
+  const popupCloseHandler = () => {
+    setVisibility(false);
+  };
   return (
     <>
       <AppBar style={{ backgroundColor: "#283618" }}>
@@ -83,6 +92,15 @@ export default function NavigationBar() {
               </details-menu>
             </details>
           )}
+          <Box sx={{ flexGrow: 1 }}></Box>
+          <Button onClick={() => setVisibility(true)}>Cart</Button>
+          <CustomPopup
+            onClose={popupCloseHandler}
+            show={visibility}
+            title="Your Cart"
+          >
+            <CartItems />
+          </CustomPopup>
         </Toolbar>
       </AppBar>
       <Toolbar />

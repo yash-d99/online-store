@@ -3,7 +3,6 @@ import NavigationBar from "./components/NavigationBar";
 import HomePage from "./components/HomePage";
 import Discover from "./components/Discover";
 import MyItems from "./components/MyItems";
-
 function App() {
   return (
     <BrowserRouter>
