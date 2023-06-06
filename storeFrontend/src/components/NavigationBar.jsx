@@ -6,9 +6,14 @@ import CustomPopup from "./CustomPopup";
 import "@github/details-menu-element";
 import viteLogo from "/vite.svg";
 import "./NavigationBar.css";
+import PersonIcon from "@mui/icons-material/Person";
+import LoginButton from "./LoginPage";
+import { useAuth0 } from "@auth0/auth0-react";
 import "reactjs-popup/dist/index.css";
 import CartItems from "./CartItemsList";
 export default function NavigationBar() {
+  const { isAuthenticated, isLoading, logout, user } = useAuth0();
+
   const size = useWindowSize();
   const [visibility, setVisibility] = useState(false);
 
@@ -20,7 +25,10 @@ export default function NavigationBar() {
       <AppBar style={{ backgroundColor: "#283618" }}>
         <Toolbar>
           {size.width > 600 && (
-            <ButtonGroup disableElevation>
+            <ButtonGroup
+              style={{ display: "flex", gap: "5rem" }}
+              disableElevation
+            >
               <Button
                 className="navButtons"
                 sx={{
@@ -46,9 +54,33 @@ export default function NavigationBar() {
                 component={Link}
                 to="/MyItems"
               >
-                {" "}
-                My Items{" "}
+                My Items
               </Button>
+              {isAuthenticated ? (
+                <Button
+                  onClick={logout}
+                  className="navButtons"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "black",
+                    backgroundColor: "#FEFAE0",
+                    border: "none",
+                  }}
+                >
+                  Logout
+                </Button>
+              ) : (
+                <LoginButton />
+              )}
+              <Button
+                className="navButtons"
+                sx={{
+                  fontWeight: "bold",
+                  color: "black",
+                  backgroundColor: "#FEFAE0",
+                  border: "none",
+                }}
+              ></Button>
             </ButtonGroup>
           )}
           {size.width < 600 && (
