@@ -1,10 +1,17 @@
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Toolbar, ButtonGroup, Button, AppBar, Box } from "@mui/material";
+import {
+  Toolbar,
+  ButtonGroup,
+  Button,
+  AppBar,
+  Box,
+  IconButton,
+} from "@mui/material";
 import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
 import CustomPopup from "./CustomPopup";
 import "@github/details-menu-element";
-import viteLogo from "/vite.svg";
+import zephyr from "./zephyrLogo-removebg-preview.png";
 import "./NavigationBar.css";
 import PersonIcon from "@mui/icons-material/Person";
 import { useLocation } from "react-router-dom";
@@ -25,26 +32,30 @@ export default function NavigationBar() {
 
   return (
     <>
-      <AppBar style={{ backgroundColor: "#283618" }}>
+      <AppBar style={{ backgroundColor: "black" }}>
         <Toolbar>
           {size.width > 600 && (
             <ButtonGroup
               style={{ display: "flex", gap: "5rem" }}
               disableElevation
             >
+              <IconButton
+                component={Link}
+                to={"/navigation/home"}
+                style={{ width: "4%" }}
+              >
+                <img src={zephyr} width="60" height="60" alt="Zephyr Logo" />
+              </IconButton>
               <Button
                 className="navButtons"
                 sx={{
                   fontWeight: "bold",
-                  color: "black",
-                  backgroundColor: "#FEFAE0",
+                  color: "white",
                   border: "none",
                 }}
                 component={Link}
                 to="/navigation/discover"
-                style={
-                  pageName === "/discover" ? { backgroundColor: "pink" } : null
-                }
+                style={pageName === "/discover" ? { color: "#4ECDC4" } : null}
               >
                 Discover
               </Button>
@@ -52,15 +63,12 @@ export default function NavigationBar() {
                 className="navButtons"
                 sx={{
                   fontWeight: "bold",
-                  color: "black",
-                  backgroundColor: "#FEFAE0",
+                  color: "white",
                   border: "none",
                 }}
                 component={Link}
                 to="/navigation/myitems"
-                style={
-                  pageName === "/myitems" ? { backgroundColor: "pink" } : null
-                }
+                style={pageName === "/myitems" ? { color: "#4ECDC4" } : null}
               >
                 My Items
               </Button>
@@ -70,8 +78,7 @@ export default function NavigationBar() {
                   className="navButtons"
                   sx={{
                     fontWeight: "bold",
-                    color: "black",
-                    backgroundColor: "#FEFAE0",
+                    color: "white",
                     border: "none",
                   }}
                 >
@@ -87,9 +94,9 @@ export default function NavigationBar() {
               <summary className="summary">
                 {
                   <img
-                    src={viteLogo}
-                    style={{ justifySelf: "center", width: "45%" }}
-                    alt="Spots logo"
+                    src={zephyr}
+                    style={{ justifySelf: "right", width: "100%" }}
+                    alt="Zephyr logo"
                   />
                 }
                 {<h4>Navigate</h4>}

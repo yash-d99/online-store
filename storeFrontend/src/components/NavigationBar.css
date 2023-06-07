@@ -1,7 +1,3 @@
-.navButtons:hover {
-  opacity: 50%;
-}
-
 .dropdown-menu {
   background-clip: padding-box;
   background-color: var(--color-canvas-overlay);
