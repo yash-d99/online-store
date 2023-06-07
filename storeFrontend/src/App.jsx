@@ -11,17 +11,18 @@ function App() {
 
   useEffect(() => {
     console.log(cookies.myData)
-    if ( cookies.myData!=="undefined" && cookies.myData!==undefined) {
+    if (cookies.myData !== "undefined" && cookies.myData !== undefined) {
       dispatch(dataSlices.loadData(cookies.myData));
     }
   }, []);
 
 
   return (
-   
-      <Routing/>
-  
+
+    <Routing />
+
   );
+
 }
 
 export default App;
