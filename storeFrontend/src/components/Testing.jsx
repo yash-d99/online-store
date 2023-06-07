@@ -1,15 +1,19 @@
 import axios from 'axios'
 import TextField from '@mui/material/TextField'
 import React, { useEffect, useState } from 'react'
+import { useAuth0 } from "@auth0/auth0-react";
 function Testing() {
     const [description, setDescription] = useState('');
     const [itemName, setItemName] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
     const [imgName, setImgName] = useState('');
-    const email = 'dio@gmail.com';
+    const [execute, setExecute] = useState(false);
+    const { user } = useAuth0();
+    const email = user.email;
     const onSelectFile = async (event) => {
         event.preventDefault();
+        setExecute(true);
         console.log(event);
         const file = event.target[0].files[0];
         setImgName(file.name);
@@ -46,7 +50,9 @@ function Testing() {
                 console.error(error); // Handle any errors that occur
             }
         }
-        sendData();
+        if (execute) {
+            sendData();
+        }
     }, [imgName])
     const convertToBase64 = (file) => {
         return new Promise(resolve => {
