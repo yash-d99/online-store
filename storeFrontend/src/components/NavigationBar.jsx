@@ -7,19 +7,22 @@ import "@github/details-menu-element";
 import viteLogo from "/vite.svg";
 import "./NavigationBar.css";
 import PersonIcon from "@mui/icons-material/Person";
+import { useLocation } from "react-router-dom";
 import LoginButton from "./LoginPage";
 import { useAuth0 } from "@auth0/auth0-react";
 import "reactjs-popup/dist/index.css";
 import CartItems from "./CartItemsList";
 export default function NavigationBar() {
   const { isAuthenticated, isLoading, logout, user } = useAuth0();
-
+  const location = useLocation();
+  const pageName = location.pathname.substring(11);
   const size = useWindowSize();
   const [visibility, setVisibility] = useState(false);
 
   const popupCloseHandler = () => {
     setVisibility(false);
   };
+
   return (
     <>
       <AppBar style={{ backgroundColor: "#283618" }}>
@@ -39,9 +42,11 @@ export default function NavigationBar() {
                 }}
                 component={Link}
                 to="/navigation/discover"
+                style={
+                  pageName === "/discover" ? { backgroundColor: "pink" } : null
+                }
               >
-                {" "}
-                Discover{" "}
+                Discover
               </Button>
               <Button
                 className="navButtons"
@@ -53,6 +58,9 @@ export default function NavigationBar() {
                 }}
                 component={Link}
                 to="/navigation/myitems"
+                style={
+                  pageName === "/myitems" ? { backgroundColor: "pink" } : null
+                }
               >
                 My Items
               </Button>

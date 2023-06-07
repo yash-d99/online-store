@@ -1,25 +1,26 @@
 
-import Testing from './components/Testing'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar";
-import HomePage from "./components/HomePage";
-import Discover from "./components/Discover";
-import MyItems from "./components/MyItems";
-import Redirect from "./components/redirect";
-
+import { Provider, useDispatch } from 'react-redux';
+import { CookiesProvider, useCookies } from 'react-cookie';
+import { dataSlices } from './Store/dataSlice';
+import Routing from "./Routing";
+import { useEffect } from "react";
 function App() {
+
+  const dispatch = useDispatch();
+  const [cookies, setCookie] = useCookies(['myData']);
+
+  useEffect(() => {
+    console.log(cookies.myData)
+    if (cookies.myData !== "undefined" && cookies.myData !== undefined) {
+      dispatch(dataSlices.loadData(cookies.myData));
+    }
+  }, []);
+
+
   return (
 
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Redirect />} />
-        <Route path="/navigation" element={<NavigationBar />}>
-          <Route path="home" element={<HomePage />} />
-          <Route path="discover" element={<Discover />} />
-          <Route path="myitems" element={<MyItems />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routing />
+
   );
 
 }
