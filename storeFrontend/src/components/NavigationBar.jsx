@@ -1,17 +1,37 @@
 import { useWindowSize } from "@uidotdev/usehooks";
-import { Toolbar, ButtonGroup, Button, AppBar } from "@mui/material";
+import { Toolbar, ButtonGroup, Button, AppBar, Box } from "@mui/material";
 import { Outlet, Link } from "react-router-dom";
+import { useState } from "react";
+import CustomPopup from "./CustomPopup";
 import "@github/details-menu-element";
 import viteLogo from "/vite.svg";
 import "./NavigationBar.css";
+import PersonIcon from "@mui/icons-material/Person";
+import { useLocation } from "react-router-dom";
+import LoginButton from "./LoginPage";
+import { useAuth0 } from "@auth0/auth0-react";
+import "reactjs-popup/dist/index.css";
+import CartItems from "./CartItemsList";
 export default function NavigationBar() {
+  const { isAuthenticated, isLoading, logout, user } = useAuth0();
+  const location = useLocation();
+  const pageName = location.pathname.substring(11);
   const size = useWindowSize();
+  const [visibility, setVisibility] = useState(false);
+
+  const popupCloseHandler = () => {
+    setVisibility(false);
+  };
+
   return (
     <>
       <AppBar style={{ backgroundColor: "#283618" }}>
         <Toolbar>
           {size.width > 600 && (
-            <ButtonGroup disableElevation>
+            <ButtonGroup
+              style={{ display: "flex", gap: "5rem" }}
+              disableElevation
+            >
               <Button
                 className="navButtons"
                 sx={{
@@ -21,10 +41,12 @@ export default function NavigationBar() {
                   border: "none",
                 }}
                 component={Link}
-                to="/Discover"
+                to="/navigation/discover"
+                style={
+                  pageName === "/discover" ? { backgroundColor: "pink" } : null
+                }
               >
-                {" "}
-                Discover{" "}
+                Discover
               </Button>
               <Button
                 className="navButtons"
@@ -35,11 +57,29 @@ export default function NavigationBar() {
                   border: "none",
                 }}
                 component={Link}
-                to="/MyItems"
+                to="/navigation/myitems"
+                style={
+                  pageName === "/myitems" ? { backgroundColor: "pink" } : null
+                }
               >
-                {" "}
-                My Items{" "}
+                My Items
               </Button>
+              {isAuthenticated ? (
+                <Button
+                  onClick={logout}
+                  className="navButtons"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "black",
+                    backgroundColor: "#FEFAE0",
+                    border: "none",
+                  }}
+                >
+                  Logout
+                </Button>
+              ) : (
+                <LoginButton />
+              )}
             </ButtonGroup>
           )}
           {size.width < 600 && (
@@ -62,27 +102,36 @@ export default function NavigationBar() {
                 <Button
                   sx={{ color: "black", textAlign: "center" }}
                   component={Link}
-                  to={"/Home"}
+                  to={"/navigation/home"}
                 >
                   Home
                 </Button>
                 <Button
                   sx={{ color: "black", textAlign: "center" }}
                   component={Link}
-                  to={"/Discover"}
+                  to={"/navigation/discover"}
                 >
                   Discover
                 </Button>
                 <Button
                   sx={{ color: "black", textAlign: "center" }}
                   component={Link}
-                  to={"/MyItems"}
+                  to={"/navigation/myitems"}
                 >
                   My Items
                 </Button>
               </details-menu>
             </details>
           )}
+          <Box sx={{ flexGrow: 1 }}></Box>
+          <Button onClick={() => setVisibility(true)}>Cart</Button>
+          <CustomPopup
+            onClose={popupCloseHandler}
+            show={visibility}
+            title="Your Cart"
+          >
+            <CartItems />
+          </CustomPopup>
         </Toolbar>
       </AppBar>
       <Toolbar />
