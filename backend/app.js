@@ -4,12 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv').config()
+const fileUpload = require("express-fileupload");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var awsRouter = require('./routes/aws');
+var dbRouter = require('./routes/db');
 var app = express();
 
+//adding express file upload functionality
+app.use(fileUpload());
 //added based on express introduction document
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -32,7 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/aws', awsRouter);
+app.use('/db', dbRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
