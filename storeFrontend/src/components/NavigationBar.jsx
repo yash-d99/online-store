@@ -2,6 +2,8 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { Toolbar, ButtonGroup, Button, AppBar, Box } from "@mui/material";
 import { Outlet, Link } from "react-router-dom";
 import { useState } from "react";
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CustomPopup from "./CustomPopup";
 import "@github/details-menu-element";
 import viteLogo from "/vite.svg";
@@ -12,6 +14,8 @@ import LoginButton from "./LoginPage";
 import { useAuth0 } from "@auth0/auth0-react";
 import "reactjs-popup/dist/index.css";
 import CartItems from "./CartItemsList";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 export default function NavigationBar() {
   const { isAuthenticated, isLoading, logout, user } = useAuth0();
   const location = useLocation();
@@ -22,6 +26,18 @@ export default function NavigationBar() {
   const popupCloseHandler = () => {
     setVisibility(false);
   };
+  const [highlight, setHighlight] = useState(false);
+  const itemCount=useSelector(state=>state.totalQuantity)
+  useEffect(() => {
+    if (itemCount > 0) {
+      setHighlight(true);
+      const timer = setTimeout(() => {
+        setHighlight(false);
+      }, 1000); // Highlight effect duration (1 second)
+      
+      return () => clearTimeout(timer);
+    }
+  }, [itemCount]);
 
   return (
     <>
@@ -124,7 +140,9 @@ export default function NavigationBar() {
             </details>
           )}
           <Box sx={{ flexGrow: 1 }}></Box>
-          <Button onClick={() => setVisibility(true)}>Cart</Button>
+          <Button sx={{height:"100%"}} className={highlight ? 'highlight' : ''} onClick={() => setVisibility(true)}><Badge  badgeContent={itemCount} color="error">
+ <ShoppingCartIcon className={highlight ? 'highlight' : ''} />
+</Badge></Button>
           <CustomPopup
             onClose={popupCloseHandler}
             show={visibility}
