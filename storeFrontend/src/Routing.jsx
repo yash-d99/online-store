@@ -14,8 +14,11 @@ const Routing=()=>{
   const [cookies, setCookie] = useCookies(['myData']);
 
   useEffect(() => {
-
-    setCookie('myData', data);
+   console.log(data.items.length)
+    if (data.items.length!==0){
+        setCookie('myData', data);
+    }
+   
   }, [data]);
 
 return(

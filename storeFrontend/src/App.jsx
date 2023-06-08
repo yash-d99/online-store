@@ -10,6 +10,7 @@ function App() {
   const [cookies, setCookie] = useCookies(['myData']);
 
   useEffect(() => {
+    console.log("cookies.myData")
     console.log(cookies.myData)
     if (cookies.myData !== "undefined" && cookies.myData !== undefined) {
       dispatch(dataSlices.loadData(cookies.myData));

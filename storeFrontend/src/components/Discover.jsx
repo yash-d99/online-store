@@ -13,9 +13,12 @@ import MenuItem from "@mui/material/MenuItem";
 import { Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import { useState, useEffect, useRef } from "react";
 
+import {useState, useEffect, useRef} from 'react';
+import { useDispatch } from "react-redux";
+import { dataSlices } from "../Store/dataSlice";
 export default function Discover() {
+  const dispatch=useDispatch()
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState("");
   const [order, setOrder] = useState("");
@@ -35,6 +38,7 @@ export default function Discover() {
     },
     { name: "Jacket", price: 60, description: "This is item 4", quantity: 2 },
   ];
+
 
   const sorting = ["Price Ascending", "Price Descending"];
 
@@ -58,15 +62,18 @@ export default function Discover() {
             </Typography>
             <Typography gutterBottom variant="body1" component="div">
               Quantity: {item.quantity}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {item.description}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Add to cart</Button>
-          </CardActions>
-        </Card>
+
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {item.description}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={()=>{
+            dispatch(dataSlices.addItemToCart(item))
+          }}>Add to cart</Button>
+        </CardActions>
+      </Card>
       </Grid>
     );
   }
