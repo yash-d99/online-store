@@ -37,10 +37,7 @@ function MyItems() {
     }
   };
   useEffect(() => {
-    if (render) {
-      getItems();
-      console.log(itemList);
-    }
+    getItems();
   }, [email, showForm]);
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
@@ -128,6 +125,11 @@ function MyItems() {
     setShowForm(true);
   }
   function closeForm() {
+    setPrice("");
+    setImgName("");
+    setItemName("");
+    setDescription("");
+    setQuantity("");
     setShowForm(false);
   }
   const formStyles = {
@@ -163,9 +165,9 @@ function MyItems() {
                       <form style={formStyles} onSubmit={onSelectFile}>
                         <div>
                           {/* <label>
-                                Upload a picture of the item:
-                                <input id='image' type="file" accept="image/*" />
-                            </label> */}
+                                    Upload a picture of the item:
+                                    <input id='image' type="file" accept="image/*" />
+                                </label> */}
 
                           <Button variant="contained" component="label">
                             Upload File

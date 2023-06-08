@@ -107,7 +107,7 @@ export default function Discover() {
   };
 
   return (
-    <div style={{ marginTop: sized.width < 600 ? "20vh" : "4vh" }}>
+    <div style={{ marginTop: sized.width < 600 ? "20vh" : "4vh", marginBottom:"4vh" }}>
       <div>
         <TextField
           align-items="center"
