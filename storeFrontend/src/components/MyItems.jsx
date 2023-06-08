@@ -35,10 +35,7 @@ function MyItems() {
         }
     };
     useEffect(() => {
-        if (render) {
-            getItems();
-            console.log(itemList);
-        }
+        getItems();
     }, [email, showForm]);
     useEffect(() => {
         if (isAuthenticated && !isLoading) {
@@ -100,6 +97,11 @@ function MyItems() {
         setShowForm(true);
     }
     function closeForm() {
+        setPrice('');
+        setImgName('');
+        setItemName('');
+        setDescription('');
+        setQuantity('');
         setShowForm(false);
     }
     const formStyles = {
@@ -131,15 +133,12 @@ function MyItems() {
                                         justifyContent="center"
                                         minHeight="100vh"
                                     >
-                                        <form style={formStyles} onSubmit={onSelectFile}>
-                                            <div>
-                                                {/* <label>
-                                Upload a picture of the item:
-                                <input id='image' type="file" accept="image/*" />
-                            </label> */}
 
+                                        <form style={formStyles} onSubmit={onSelectFile}>
+                                            <h1>Add an Item to Sell</h1>
+                                            <div>
                                                 <Button variant="contained" component="label">
-                                                    Upload File
+                                                    Upload Image
                                                     <input
                                                         id="image"
                                                         type="file"
@@ -148,6 +147,7 @@ function MyItems() {
                                                     />
                                                 </Button>
                                             </div>
+                                            <br />
                                             <div>
                                                 <TextField
                                                     id="outlined-basic"
@@ -213,17 +213,20 @@ function MyItems() {
                                                 </Button>
                                             </div>
                                             {/* <input type='submit' /> */}
+
+                                            <br />
+
+                                            <Button
+                                                variant="outlined"
+                                                color="secondary"
+                                                startIcon={<CancelIcon />}
+                                                onClick={closeForm}
+                                            >
+                                                Cancel
+                                            </Button>{" "}
                                         </form>
                                     </Box>
                                 </Container>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    startIcon={<CancelIcon />}
-                                    onClick={closeForm}
-                                >
-                                    Cancel
-                                </Button>{" "}
                             </div>
                         ) : (
                             <div style={{ display: "flex", gap: "5vh" }}>
