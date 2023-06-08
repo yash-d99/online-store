@@ -39,43 +39,41 @@ export default function Discover() {
   // Render the card for one item
   function renderCard(item) {
     return (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-        <Card sx={{ border: "3px solid black" }}>
-          <CardMedia
-            sx={{ height: 200 }}
-            // replace this with the image that will be added to the cloud
-            image={item.imageLink}
-            title="item image"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {item.name}
-            </Typography>
-            <Typography gutterBottom variant="h6" component="div">
-              Price: ${item.price}
-            </Typography>
-            <Typography gutterBottom variant="body1" component="div">
-              Quantity: {item.quantity}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {item.description}
-            </Typography>
-          </CardContent>
-          {isAuthenticated && (
-            <CardActions>
-              <Button
-                size="small"
-                onClick={() => {
-                  dispatch(dataSlices.addItemToCart(item));
-                }}
-              >
-                Add to cart
-              </Button>
-            </CardActions>
-          )}
-          {isLoading && <CircularProgress color="success" />}
-        </Card>
-      </Grid>
+      <Card sx={{ border: "3px solid black" }}>
+        <CardMedia
+          sx={{ height: 200 }}
+          // replace this with the image that will be added to the cloud
+          image={item.imageLink}
+          title="item image"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {item.name}
+          </Typography>
+          <Typography gutterBottom variant="h6" component="div">
+            Price: ${item.price}
+          </Typography>
+          <Typography gutterBottom variant="body1" component="div">
+            Quantity: {item.quantity}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {item.description}
+          </Typography>
+        </CardContent>
+        {isAuthenticated && (
+          <CardActions>
+            <Button
+              size="small"
+              onClick={() => {
+                dispatch(dataSlices.addItemToCart(item));
+              }}
+            >
+              Add to cart
+            </Button>
+          </CardActions>
+        )}
+        {isLoading && <CircularProgress color="success" />}
+      </Card>
     );
   }
 

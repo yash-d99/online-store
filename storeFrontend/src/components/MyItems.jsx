@@ -227,36 +227,37 @@ function MyItems() {
               </div>
             ) : (
               <div style={{ display: "flex", gap: "5vh" }}>
-                {itemList.map((item) => (
-                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                    <Card>
-                      <CardMedia
-                        sx={{ height: 140 }}
-                        // replace this with the image that will be added to the cloud
-                        image={item.imageLink}
-                        title="item image"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          {item.name}
-                        </Typography>
-                        <Typography gutterBottom variant="h6" component="div">
-                          Price: ${item.price}
-                        </Typography>
-                        <Typography
-                          gutterBottom
-                          variant="body1"
-                          component="div"
-                        >
-                          Quantity:{item.quantity}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {item.description}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
+                {itemList &&
+                  itemList.map((item, index) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+                      <Card>
+                        <CardMedia
+                          sx={{ height: 140 }}
+                          // replace this with the image that will be added to the cloud
+                          image={item.imageLink}
+                          title="item image"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" component="div">
+                            {item.name}
+                          </Typography>
+                          <Typography gutterBottom variant="h6" component="div">
+                            Price: ${item.price}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="body1"
+                            component="div"
+                          >
+                            Quantity:{item.quantity}
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {item.description}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
                 <div>
                   <Button onClick={displayForm}>Add an item</Button>
                 </div>
