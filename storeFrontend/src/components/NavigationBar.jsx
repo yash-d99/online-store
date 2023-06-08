@@ -48,8 +48,8 @@ export default function NavigationBar() {
 
   return (
     <>
-      <AppBar style={{ backgroundColor: "black" }}>
-        <Toolbar>
+      <AppBar sx={{ backgroundColor: "black",}}>
+        <Toolbar >
           {size.width > 600 && (
             <ButtonGroup
               style={{ display: "flex", gap: "5rem" }}
@@ -75,6 +75,8 @@ export default function NavigationBar() {
               >
                 Discover
               </Button>
+
+              {isAuthenticated &&
               <Button
                 className="navButtons"
                 sx={{
@@ -88,6 +90,7 @@ export default function NavigationBar() {
               >
                 My Items
               </Button>
+}
               {isAuthenticated ? (
                 <Button
                   onClick={logout}
@@ -147,9 +150,10 @@ export default function NavigationBar() {
             </details>
           )}
           <Box sx={{ flexGrow: 1 }}></Box>
-          <Button sx={{height:"100%"}} className={highlight ? 'highlight' : ''} onClick={() => setVisibility(true)}><Badge  badgeContent={itemCount} color="error">
+          { isAuthenticated &&  <Button sx={{height:"100%"}} className={highlight ? 'highlight' : ''} onClick={() => setVisibility(true)}><Badge  badgeContent={itemCount} color="error">
  <ShoppingCartIcon className={highlight ? 'highlight' : ''} />
-</Badge></Button>
+</Badge></Button>}
+         
           <CustomPopup
             onClose={popupCloseHandler}
             show={visibility}

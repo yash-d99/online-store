@@ -13,7 +13,9 @@ import MenuItem from "@mui/material/MenuItem";
 import { Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-
+import { useWindowSize } from "@uidotdev/usehooks";
+import { useAuth0 } from "@auth0/auth0-react";
+import CircularProgress from '@mui/material/CircularProgress';
 import {useState, useEffect, useRef} from 'react';
 import { useDispatch } from "react-redux";
 import { dataSlices } from "../Store/dataSlice";
@@ -22,7 +24,8 @@ export default function Discover() {
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState("");
   const [order, setOrder] = useState("");
-
+  const sized = useWindowSize();
+ const {isAuthenticated, isLoading}=useAuth0()
   // Create dummy data for the store
   // link to the image will be added later
   // quantity will be added?
@@ -45,8 +48,8 @@ export default function Discover() {
   // Render the card for one item
   function renderCard(item) {
     return (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-        <Card>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2} >
+        <Card sx={{ border: '3px solid black', }}>
           <CardMedia
             sx={{ height: 140 }}
             // replace this with the image that will be added to the cloud
@@ -68,11 +71,15 @@ export default function Discover() {
             {item.description}
           </Typography>
         </CardContent>
+        {isAuthenticated &&
         <CardActions>
-          <Button size="small" onClick={()=>{
+            <Button size="small" onClick={()=>{
             dispatch(dataSlices.addItemToCart(item))
           }}>Add to cart</Button>
-        </CardActions>
+         
+        </CardActions>}
+        {isLoading &&
+          <CircularProgress color="success"/>}
       </Card>
       </Grid>
     );
@@ -137,9 +144,10 @@ export default function Discover() {
   //     }
   // }
 
+
+
   return (
-    <div>
-      <LoginButton></LoginButton>
+    <div style={{marginTop:sized.width<600? "20vh":"4vh"}}>
 
       <div>
         <TextField
