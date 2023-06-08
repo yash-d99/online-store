@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Container, Box } from "@mui/material";
 
 function MyItems() {
   const [description, setDescription] = useState("");
@@ -110,135 +110,162 @@ function MyItems() {
   };
 
   return (
-    <div>
-      {!render ? (
-        <CircularProgress size={24} color="inherit" />
-      ) : (
-        <div>
-          {showForm ? (
-            <div>
-              <form style={formStyles} onSubmit={onSelectFile}>
-                <div>
-                  {/* <label>
+    <Grid container>
+      <CardContent
+        sx={{
+          marginLeft: "45vw",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        {!render ? (
+          <CircularProgress size={24} color="inherit" />
+        ) : (
+          <div>
+            {showForm ? (
+              <div>
+                <Container>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    minHeight="100vh"
+                  >
+                    <form style={formStyles} onSubmit={onSelectFile}>
+                      <div>
+                        {/* <label>
                                 Upload a picture of the item:
                                 <input id='image' type="file" accept="image/*" />
                             </label> */}
 
-                  <Button variant="contained" component="label">
-                    Upload File
-                    <input id="image" type="file" accept="image/*" hidden />
-                  </Button>
-                </div>
-                <div>
-                  <TextField
-                    id="outlined-basic"
-                    label="Item name"
-                    variant="outlined"
-                    name="name"
-                    required
-                    fullWidth
-                    sx={{ marginBottom: "8px" }}
-                    value={itemName}
-                    onChange={(e) => setItemName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    id="outlined-basic"
-                    label="Description"
-                    variant="outlined"
-                    name="description"
-                    required
-                    fullWidth
-                    sx={{ marginBottom: "8px" }}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
+                        <Button variant="contained" component="label">
+                          Upload File
+                          <input
+                            id="image"
+                            type="file"
+                            accept="image/*"
+                            hidden
+                          />
+                        </Button>
+                      </div>
+                      <div>
+                        <TextField
+                          id="outlined-basic"
+                          label="Item name"
+                          variant="outlined"
+                          name="name"
+                          required
+                          fullWidth
+                          sx={{ marginBottom: "8px" }}
+                          value={itemName}
+                          onChange={(e) => setItemName(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <TextField
+                          id="outlined-basic"
+                          label="Description"
+                          variant="outlined"
+                          name="description"
+                          required
+                          fullWidth
+                          sx={{ marginBottom: "8px" }}
+                          value={description}
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
+                      </div>
 
-                <div>
-                  <TextField
-                    type="number"
-                    id="outlined-basic"
-                    label="Price ($)"
-                    variant="outlined"
-                    name="price"
-                    required
-                    fullWidth
-                    sx={{ marginBottom: "8px" }}
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    type="number"
-                    id="outlined-basic"
-                    label="Quantity"
-                    variant="outlined"
-                    name="quantity"
-                    required
-                    fullWidth
-                    sx={{ marginBottom: "8px" }}
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <Button type="submit" variant="contained" color="primary">
-                    Submit
-                  </Button>
-                </div>
-                {/* <input type='submit' /> */}
-              </form>
-              <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<CancelIcon />}
-                onClick={closeForm}
-              >
-                Cancel
-              </Button>{" "}
-            </div>
-          ) : (
-            <div style={{ display: "flex", gap: "5vh" }}>
-              {itemList.map((item) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
-                  <Card>
-                    <CardMedia
-                      sx={{ height: 140 }}
-                      // replace this with the image that will be added to the cloud
-                      image={item.imageLink}
-                      title="item image"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {item.name}
-                      </Typography>
-                      <Typography gutterBottom variant="h6" component="div">
-                        Price: ${item.price}
-                      </Typography>
-                      <Typography gutterBottom variant="body1" component="div">
-                        Quantity:{item.quantity}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.description}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small">Add to cart</Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-              <div>
-                <Button onClick={displayForm}>Add an item</Button>
+                      <div>
+                        <TextField
+                          type="number"
+                          id="outlined-basic"
+                          label="Price ($)"
+                          variant="outlined"
+                          name="price"
+                          required
+                          fullWidth
+                          sx={{ marginBottom: "8px" }}
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <TextField
+                          type="number"
+                          id="outlined-basic"
+                          label="Quantity"
+                          variant="outlined"
+                          name="quantity"
+                          required
+                          fullWidth
+                          sx={{ marginBottom: "8px" }}
+                          value={quantity}
+                          onChange={(e) => setQuantity(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                        >
+                          Submit
+                        </Button>
+                      </div>
+                      {/* <input type='submit' /> */}
+                    </form>
+                  </Box>
+                </Container>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  startIcon={<CancelIcon />}
+                  onClick={closeForm}
+                >
+                  Cancel
+                </Button>{" "}
               </div>
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+            ) : (
+              <div style={{ display: "flex", gap: "5vh" }}>
+                {itemList.map((item) => (
+                  <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+                    <Card>
+                      <CardMedia
+                        sx={{ height: 140 }}
+                        // replace this with the image that will be added to the cloud
+                        image={item.imageLink}
+                        title="item image"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {item.name}
+                        </Typography>
+                        <Typography gutterBottom variant="h6" component="div">
+                          Price: ${item.price}
+                        </Typography>
+                        <Typography
+                          gutterBottom
+                          variant="body1"
+                          component="div"
+                        >
+                          Quantity:{item.quantity}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {item.description}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+                <div>
+                  <Button onClick={displayForm}>Add an item</Button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </CardContent>
+    </Grid>
   );
 }
 

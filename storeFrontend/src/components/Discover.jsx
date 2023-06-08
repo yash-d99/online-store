@@ -8,15 +8,24 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
-import { useEffect } from "react";
-
+import MenuItem from "@mui/material/MenuItem";
+import { Select } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { useAuth0 } from "@auth0/auth0-react";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { dataSlices } from "../Store/dataSlice";
 export default function Discover() {
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
 
   const [priceRangeValue, setPriceRangeValue] = useState([0, 1000]);
   const [priceIsChanged, setPriceIsChanged] = useState(false);
-
+  const sized = useWindowSize();
+  const { isAuthenticated, isLoading } = useAuth0();
   // Create dummy data for the store
   // link to the image will be added later
   // quantity will be added?
@@ -30,31 +39,43 @@ export default function Discover() {
   // Render the card for one item
   function renderCard(item) {
     return (
-      <Card>
-        <CardMedia
-          sx={{ height: 200 }}
-          // replace this with the image that will be added to the cloud
-          image={item.imageLink}
-          title="item image"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {item.name}
-          </Typography>
-          <Typography gutterBottom variant="h6" component="div">
-            Price: ${item.price}
-          </Typography>
-          <Typography gutterBottom variant="body1" component="div">
-            Quantity: {item.quantity}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {item.description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Add to cart</Button>
-        </CardActions>
-      </Card>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+        <Card sx={{ border: "3px solid black" }}>
+          <CardMedia
+            sx={{ height: 200 }}
+            // replace this with the image that will be added to the cloud
+            image={item.imageLink}
+            title="item image"
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {item.name}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              Price: ${item.price}
+            </Typography>
+            <Typography gutterBottom variant="body1" component="div">
+              Quantity: {item.quantity}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {item.description}
+            </Typography>
+          </CardContent>
+          {isAuthenticated && (
+            <CardActions>
+              <Button
+                size="small"
+                onClick={() => {
+                  dispatch(dataSlices.addItemToCart(item));
+                }}
+              >
+                Add to cart
+              </Button>
+            </CardActions>
+          )}
+          {isLoading && <CircularProgress color="success" />}
+        </Card>
+      </Grid>
     );
   }
 
@@ -88,7 +109,7 @@ export default function Discover() {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: sized.width < 600 ? "20vh" : "4vh" }}>
       <div>
         <TextField
           align-items="center"

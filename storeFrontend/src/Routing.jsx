@@ -8,20 +8,23 @@ import MyItems from "./components/MyItems";
 import Redirect from "./components/redirect";
 import { useEffect } from "react";
 
-const Routing=()=>{
-    const data = useSelector(state=>state);
+const Routing = () => {
+  const data = useSelector(state => state);
   const dispatch = useDispatch();
   const [cookies, setCookie] = useCookies(['myData']);
 
   useEffect(() => {
-
-    setCookie('myData', data);
+    if (data.items) {
+      if (data.items.length !== 0) {
+        setCookie('myData', data);
+      }
+    }
   }, [data]);
 
-return(
+  return (
     <BrowserRouter>
-    {console.log("THE DATA")}
-    {console.log(data)}
+      {console.log("THE DATA")}
+      {console.log(data)}
       <Routes>
         <Route path="/" element={<Redirect />} />
         <Route path="/navigation" element={<NavigationBar />}>
@@ -31,7 +34,7 @@ return(
         </Route>
       </Routes>
     </BrowserRouter>
-)
+  )
 
 
 }
