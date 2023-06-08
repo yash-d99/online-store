@@ -14,8 +14,10 @@ import { Select } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import {useState, useEffect, useRef} from 'react';
-
+import { useDispatch } from "react-redux";
+import { dataSlices } from "../Store/dataSlice";
 export default function Discover() {
+  const dispatch=useDispatch()
   const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState("");
   const [order, setOrder] = useState("");
@@ -24,11 +26,11 @@ export default function Discover() {
     // link to the image will be added later 
     // quantity will be added? 
     const items = [
-      {name: "T-shirt", price: 50, description: "This is item 1", quantity: 10},
-      {name: "Jeans", price: 30, description: "This is item 2", quantity: 9},
-      {name: "Sweater", price: 40, description: "This is item 3", quantity: 7},
-      {name: "Yellow shirt", price: 90, description: "This is item 6", quantity: 5},
-      {name: "Jacket", price: 60, description: "This is item 4", quantity: 2},
+      {name: "T-shirt", id:"dfsfdsasf",price: 50.01, description: "This is item 1", quantity: 10},
+      {name: "Jeans",id:"dfsfddfafsafdsfafdsafdsasf", price: 30.02, description: "This is item 2", quantity: 9},
+      {name: "Sweater",id:"kkkdskfsfsdks", price: 40.01, description: "This is item 3", quantity: 7},
+      {name: "Yellow shirt", id:"ssssss",price: 90.09, description: "This is item 6", quantity: 5},
+      {name: "Jacket",id:"sssrrrsss", price: 60.05, description: "This is item 4", quantity: 2},
     ];
 
   const sorting = [
@@ -63,7 +65,9 @@ export default function Discover() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Add to cart</Button>
+          <Button size="small" onClick={()=>{
+            dispatch(dataSlices.addItemToCart(item))
+          }}>Add to cart</Button>
         </CardActions>
       </Card>
       </Grid>

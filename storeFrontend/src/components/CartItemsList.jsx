@@ -1,29 +1,15 @@
 import CartItem from "./CartItem";
+
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { dataSlices } from "../Store/dataSlice";
+
 export default function CartItems() {
-  let total = 0;
-  const items = [
-    {
-      product: "Shirt",
-      price: 20,
-      quantity: 1,
-    },
-    {
-      product: "Pants",
-      price: 15,
-      quantity: 2,
-    },
-    {
-      product: "Hat",
-      price: 15,
-      quantity: 5,
-    },
-  ];
-  const totalPrice = () => {
-    items.map(({ price, quantity }) => {
-      total += price * quantity;
-    });
-  };
-  totalPrice();
+  const items=useSelector(state=>state.items)
+  const total=useSelector(state=>state.totalPrice)
+  const dispatch=useDispatch()
+
+
   return (
     <>
       <div className="product-row">
@@ -31,16 +17,22 @@ export default function CartItems() {
         <h5>Price</h5>
         <h5>Quantity</h5>
       </div>
-      {items.map((doc, index) => (
-        <div key={index}>
+      {items.map((doc) => (
+        <div key={doc.id}>
           <CartItem
-            product={doc.product}
+            id={doc.id}
+            product={doc.name}
             price={doc.price}
             quantity={doc.quantity}
+            onAdd={()=>{
+              dispatch(dataSlices.addItemToCart({name:doc.name,price:doc.price,id:doc.id}))
+            }}
+            
+         
           />
         </div>
       ))}
-      <h5 style={{ color: "black" }}>Total price of your cart: {total}</h5>
+      <h5 style={{ color: "black" }}>Total price of your cart: {total.toFixed(2)}</h5>
     </>
   );
 }
