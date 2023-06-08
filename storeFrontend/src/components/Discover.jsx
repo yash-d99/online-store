@@ -1,7 +1,4 @@
-import LoginButton from "./LoginPage";
-import * as React from "react";
 import Stack from "@mui/material/Stack";
-import Slider from "@mui/material/Slider";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,36 +8,25 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import zephyr from "./zephyrLogo-removebg-preview.png";
-import MenuItem from "@mui/material/MenuItem";
-import { Select } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Discover() {
   const [search, setSearch] = useState("");
 
-  const [order, setOrder] = useState("");
-
   const [priceRangeValue, setPriceRangeValue] = useState([0, 1000]);
   const [priceIsChanged, setPriceIsChanged] = useState(false);
+
   // Create dummy data for the store
   // link to the image will be added later
   // quantity will be added?
-  const items = [
-    { name: "T-shirt", price: 50, description: "This is item 1", quantity: 10 },
-    { name: "Jeans", price: 30, description: "This is item 2", quantity: 9 },
-    { name: "Sweater", price: 40, description: "This is item 3", quantity: 7 },
-    {
-      name: "Yellow shirt",
-      price: 90,
-      description: "This is item 6",
-      quantity: 5,
-    },
-    { name: "Jacket", price: 60, description: "This is item 4", quantity: 2 },
-  ];
+  const [items, setItems] = useState();
   const [filteredData, setFilteredData] = useState(items);
+  useEffect(() => {
+    fetch("http://localhost:3000/products/all")
+      .then((res) => res.json())
+      .then((text) => setItems(text.allItems));
+  }, []);
   // Render the card for one item
   function renderCard(item) {
     return (
@@ -48,7 +34,7 @@ export default function Discover() {
         <CardMedia
           sx={{ height: 200 }}
           // replace this with the image that will be added to the cloud
-          image={zephyr}
+          image={item.imageLink}
           title="item image"
         />
         <CardContent>
@@ -144,26 +130,28 @@ export default function Discover() {
           />
           <Button onClick={handlePriceRange}>Go</Button>
         </Stack>
-        <Container maxWidth="100%">
-          <Grid
-            container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-          >
-            {search === "" && !priceIsChanged
-              ? items &&
-                items.map((item, index) => (
-                  <Grid item xs={2} sm={3} md={3} key={index}>
-                    {renderCard(item)}
-                  </Grid>
-                ))
-              : filteredData.map((item, index) => (
-                  <Grid item xs={2} sm={3} md={3} key={index}>
-                    {renderCard(item)}
-                  </Grid>
-                ))}
-          </Grid>
-        </Container>
+        {items ? (
+          <Container maxWidth="100%">
+            <Grid
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+              {search === "" && !priceIsChanged
+                ? items &&
+                  items.map((item, index) => (
+                    <Grid item xs={2} sm={3} md={3} key={index}>
+                      {renderCard(item)}
+                    </Grid>
+                  ))
+                : filteredData.map((item, index) => (
+                    <Grid item xs={2} sm={3} md={3} key={index}>
+                      {renderCard(item)}
+                    </Grid>
+                  ))}
+            </Grid>
+          </Container>
+        ) : null}
       </div>
     </div>
   );
