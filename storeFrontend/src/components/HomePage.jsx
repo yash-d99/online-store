@@ -1,8 +1,10 @@
+import zephyr from "./zephyrLogo-removebg-preview.png";
 export default function HomePage() {
   return (
     <>
-      <h1>Welcome to Recycle Items</h1>
-      <h2>Location for all things needed to be gone</h2>
+      <img src={zephyr} />
+      <h1>Zephyr</h1>
+      <h2>Your one stop shop for all new clothing</h2>
     </>
   );
 }

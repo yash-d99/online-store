@@ -8,6 +8,10 @@ const {
     updateDoc,
     setDoc,
     arrayUnion,
+    query,
+    collection,
+    where,
+    getDocs
 } = require("firebase/firestore");
 
 router.post("/add_item", async function (req, res, next) {
@@ -46,13 +50,24 @@ router.post("/add_item", async function (req, res, next) {
                     price: price,
                     quantity: quantity
                 }
-            ]
+            ],
+            email: email
 
         });
     }
 
 });
 
+router.post("/get-items", async function (req, res, next) {
+    const email = req.body.email;
+    let ret;
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        ret = doc.data().items;
+    });
+    res.json({ result: ret });
+});
 
 
 module.exports = router;
