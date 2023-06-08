@@ -5,9 +5,9 @@ import { useDispatch } from "react-redux";
 import { dataSlices } from "../Store/dataSlice";
 
 export default function CartItems() {
-  const items=useSelector(state=>state.items)
-  const total=useSelector(state=>state.totalPrice)
-  const dispatch=useDispatch()
+  const items = useSelector(state => state.items)
+  const total = useSelector(state => state.totalPrice)
+  const dispatch = useDispatch()
 
 
   return (
@@ -24,14 +24,14 @@ export default function CartItems() {
             product={doc.name}
             price={doc.price}
             quantity={doc.quantity}
-            onAdd={()=>{
-              dispatch(dataSlices.addItemToCart({name:doc.name,price:doc.price,id:doc.id}))
+            onAdd={() => {
+              dispatch(dataSlices.addItemToCart({ name: doc.name, price: doc.price, id: doc.id }))
             }}
-            onRemove={()=>{
+            onRemove={() => {
               dispatch(dataSlices.removeItemFromCart(doc.id))
             }}
-            
-         
+
+
           />
         </div>
       ))}

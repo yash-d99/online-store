@@ -195,9 +195,6 @@ function MyItems() {
                                                     {item.description}
                                                 </Typography>
                                             </CardContent>
-                                            <CardActions>
-                                                <Button size="small">Add to cart</Button>
-                                            </CardActions>
                                         </Card>
                                     </Grid>
                                 )
