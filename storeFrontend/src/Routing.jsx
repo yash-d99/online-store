@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 import Discover from "./components/Discover";
 import MyItems from "./components/MyItems";
 import Redirect from "./components/redirect";
+import ItemPage from './components/ItemPage';
 import { useEffect } from "react";
 
 const Routing = () => {
@@ -31,6 +32,8 @@ const Routing = () => {
           <Route path="home" element={<HomePage />} />
           <Route path="discover" element={<Discover />} />
           <Route path="myitems" element={<MyItems />} />
+          <Route path="itemPage" element={<ItemPage />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
