@@ -1,5 +1,4 @@
-import LoginButton from "./LoginPage";
-import * as React from "react";
+import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -15,73 +14,66 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { useAuth0 } from "@auth0/auth0-react";
-import CircularProgress from '@mui/material/CircularProgress';
-import {useState, useEffect, useRef} from 'react';
+import CircularProgress from "@mui/material/CircularProgress";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { dataSlices } from "../Store/dataSlice";
 export default function Discover() {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const [filteredData, setFilteredData] = useState("");
-  const [order, setOrder] = useState("");
+
+  const [priceRangeValue, setPriceRangeValue] = useState([0, 1000]);
+  const [priceIsChanged, setPriceIsChanged] = useState(false);
   const sized = useWindowSize();
- const {isAuthenticated, isLoading}=useAuth0()
+  const { isAuthenticated, isLoading } = useAuth0();
   // Create dummy data for the store
   // link to the image will be added later
   // quantity will be added?
-  const items = [
-    { name: "T-shirt", price: 50, description: "This is item 1", quantity: 10 },
-    { name: "Jeans", price: 30, description: "This is item 2", quantity: 9 },
-    { name: "Sweater", price: 40, description: "This is item 3", quantity: 7 },
-    {
-      name: "Yellow shirt",
-      price: 90,
-      description: "This is item 6",
-      quantity: 5,
-    },
-    { name: "Jacket", price: 60, description: "This is item 4", quantity: 2 },
-  ];
-
-
-  const sorting = ["Price Ascending", "Price Descending"];
-
+  const [items, setItems] = useState();
+  const [filteredData, setFilteredData] = useState(items);
+  useEffect(() => {
+    fetch("http://localhost:3000/products/all")
+      .then((res) => res.json())
+      .then((text) => setItems(text.allItems));
+  }, []);
   // Render the card for one item
   function renderCard(item) {
     return (
-      <Grid item xs={12} sm={6} md={4} lg={3} xl={2} >
-        <Card sx={{ border: '3px solid black', }}>
-          <CardMedia
-            sx={{ height: 140 }}
-            // replace this with the image that will be added to the cloud
-            image="./images.png"
-            title="item image"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {item.name}
-            </Typography>
-            <Typography gutterBottom variant="h6" component="div">
-              Price: ${item.price}
-            </Typography>
-            <Typography gutterBottom variant="body1" component="div">
-              Quantity: {item.quantity}
-
+      <Card sx={{ border: "3px solid black" }}>
+        <CardMedia
+          sx={{ height: 200 }}
+          // replace this with the image that will be added to the cloud
+          image={item.imageLink}
+          title="item image"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {item.name}
+          </Typography>
+          <Typography gutterBottom variant="h6" component="div">
+            Price: ${item.price}
+          </Typography>
+          <Typography gutterBottom variant="body1" component="div">
+            Quantity: {item.quantity}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {item.description}
           </Typography>
         </CardContent>
-        {isAuthenticated &&
-        <CardActions>
-            <Button size="small" onClick={()=>{
-            dispatch(dataSlices.addItemToCart(item))
-          }}>Add to cart</Button>
-         
-        </CardActions>}
-        {isLoading &&
-          <CircularProgress color="success"/>}
+        {isAuthenticated && (
+          <CardActions>
+            <Button
+              size="small"
+              onClick={() => {
+                dispatch(dataSlices.addItemToCart(item));
+              }}
+            >
+              Add to cart
+            </Button>
+          </CardActions>
+        )}
+        {isLoading && <CircularProgress color="success" />}
       </Card>
-      </Grid>
     );
   }
 
@@ -91,67 +83,34 @@ export default function Discover() {
         item.name.toLowerCase().includes(event.target.value.toLowerCase())
       )
     );
-    // console.log("Filtered in handlesearch: ", filteredData)
-    // if (order !== "") {
-    //   handleSort(order, filteredData)
-    // }
   }
 
-  function handleSort(event, data) {
-    if (event === "Price Ascending") {
+  const handlePriceRange = () => {
+    if (search === "") {
+      setPriceIsChanged(true);
       setFilteredData(
-        data.sort((a, b) =>
-          a.price < b.price ? -1 : a.price > b.price ? 1 : 0
+        items.filter(
+          (item) =>
+            item.price >= priceRangeValue[0] && item.price <= priceRangeValue[1]
         )
       );
     } else {
-      setFilteredData(data.sort((a, b) => (a.price > b.price ? -1 : 1)));
+      setFilteredData(
+        items.filter(
+          (item) =>
+            item.name.toLowerCase().includes(search.toLowerCase()) &&
+            item.price >= priceRangeValue[0] &&
+            item.price <= priceRangeValue[1]
+        )
+      );
     }
-  }
-  // function handlePriceRange (minVal, maxVal) {
-  //   console.log("Search", search);
-  //   console.log("Max when price change: ", typeof max)
-  //   console.log("Min when price changes: ", typeof min)
-  //   if (search === "") {
-  //     setFilteredData(
-  //       items.filter((item) =>
-  //       item.price >= minVal && item.price <= maxVal
-  //       )
-  //     );
-  //   } else if (max === null && min === null) {
-  //     setFilteredData(
-  //       items.filter((item) =>
-  //       item.name.toLowerCase().includes(search.toLowerCase())
-  //       )
-  //     );
-  //   }
-  //   else {
-  //     setFilteredData(
-  //     items.filter((item) =>
-  //     item.price >= minVal && item.price <= maxVal && item.name.toLowerCase().includes(search.toLowerCase())
-  //     )
-  //   );
-  //   }
-
-  // }
-  // function chooseOutput () {
-  //     if (search === "" && order === "") {
-  //       return items.map((item) => renderCard(item));
-  //     } else if (search !== "" && order !== "") {
-  //       return filteredData.map((item) => renderCard(item));
-  //     } else if (search === "" && order !== "") {
-  //       return filteredData.map((item) => renderCard(item));
-  //     }
-  // }
-
-
+  };
 
   return (
-    <div style={{marginTop:sized.width<600? "20vh":"4vh"}}>
-
+    <div style={{ marginTop: sized.width < 600 ? "20vh" : "4vh" }}>
       <div>
         <TextField
-          align-Items="center"
+          align-items="center"
           sx={{ width: "90vw", marginBottom: "2vh", marginLeft: "5vw" }}
           value={search}
           placeholder="Look up item by name"
@@ -160,56 +119,58 @@ export default function Discover() {
             handleSearch(event);
           }}
         ></TextField>
-        {/* <FormControl style={{ width: "100%" }}>
-              <InputLabel id="demo-simple-select-label">
-                Change viewing order
-              </InputLabel>
-      <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={order}
-                label="Change viewing order"
-                onChange={(e) => {
-                  setOrder(e.target.value)
-                  handleSort(e.target.value, search === "" ?items :filteredData)
-                }}
-              >
-                {sorting.map((type) => (
-                  <MenuItem key={type} value={type}>
-                    {" "}
-                    {type}{" "}
-                  </MenuItem>
-                ))}
-              </Select>
-      </FormControl> */}
-        {/* <TextField
-              type = "number"
-              inputProps = {{min: 0, max: Number.MAX_VALUE}}
-              value={min}
-              placeholder="Minimum price range"
-              onChange={(event) => {
-                min.current = (event.target.value)
-                handlePriceRange(event.target.value, max)
-              }
-              }
-      ></TextField>
-      <TextField
-              type = "number"
-              inputProps = {{min: 0, max: Number.MAX_VALUE}}
-              value={max}
-              placeholder="Maximum price range"
-              onChange={(event) => {
-                max.current = (event.target.value)
-                handlePriceRange(min,event.target.value)
-              }}
-      ></TextField> */}
-        <Container maxWidth="100%">
-          <Grid container className="cardGrid" spacing={3}>
-            {search === ""
-              ? items && items.map((item) => renderCard(item))
-              : filteredData.map((item) => renderCard(item))}
-          </Grid>
-        </Container>
+        <Stack
+          direction="row"
+          justifyContent="space-evenly"
+          alignItems="center"
+        >
+          <TextField
+            label="min"
+            type="number"
+            variant="outlined"
+            InputLabelProps={{ shrink: true }}
+            sx={{ width: "90px" }}
+            value={priceRangeValue[0]}
+            onChange={(e) => {
+              setPriceRangeValue([Number(e.target.value), priceRangeValue[1]]);
+            }}
+          />
+          <Typography>-</Typography>
+          <TextField
+            label="max"
+            type="number"
+            variant="outlined"
+            InputLabelProps={{ shrink: true }}
+            sx={{ width: "90px" }}
+            value={priceRangeValue[1]}
+            onChange={(e) => {
+              setPriceRangeValue([priceRangeValue[0], Number(e.target.value)]);
+            }}
+          />
+          <Button onClick={handlePriceRange}>Go</Button>
+        </Stack>
+        {items ? (
+          <Container maxWidth="100%">
+            <Grid
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+              {search === "" && !priceIsChanged
+                ? items &&
+                  items.map((item, index) => (
+                    <Grid item xs={2} sm={3} md={3} key={index}>
+                      {renderCard(item)}
+                    </Grid>
+                  ))
+                : filteredData.map((item, index) => (
+                    <Grid item xs={2} sm={3} md={3} key={index}>
+                      {renderCard(item)}
+                    </Grid>
+                  ))}
+            </Grid>
+          </Container>
+        ) : null}
       </div>
     </div>
   );
