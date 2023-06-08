@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const db = require("../firebase");
+const uuid = require('uuid');
 
 const {
     getDoc,
@@ -35,7 +36,8 @@ router.post("/add_item", async function (req, res, next) {
                     imageLink: `https://launch23-swe-week3-team6.s3.us-east-2.amazonaws.com/${imageName}`,
                     name: itemName,
                     price: price,
-                    quantity: quantity
+                    quantity: quantity,
+                    itemId: uuid.v4()
 
                 })
         });
@@ -48,7 +50,8 @@ router.post("/add_item", async function (req, res, next) {
                     imageLink: `https://launch23-swe-week3-team6.s3.us-east-2.amazonaws.com/${imageName}`,
                     name: itemName,
                     price: price,
-                    quantity: quantity
+                    quantity: quantity,
+                    itemId: uuid.v4()
                 }
             ],
             email: email

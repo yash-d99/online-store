@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import CancelIcon from '@mui/icons-material/Cancel';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Container, Box } from '@mui/material';
 
 
 function MyItems() {
@@ -122,46 +122,55 @@ function MyItems() {
                     <div>
                         {showForm ? (
                             <div>
-                                <form style={formStyles} onSubmit={onSelectFile} >
-                                    <div>
-                                        {/* <label>
+                                <Container>
+                                    <Box
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                        minHeight="100vh"
+                                    >
+                                        <form style={formStyles} onSubmit={onSelectFile} >
+                                            <div>
+                                                {/* <label>
                                 Upload a picture of the item:
                                 <input id='image' type="file" accept="image/*" />
                             </label> */}
 
-                                        <Button
-                                            variant="contained"
-                                            component="label"
-                                        >
-                                            Upload File
-                                            <input id='image' type="file" accept="image/*" hidden />
-                                        </Button>
-                                    </div>
-                                    <div>
-                                        <TextField id="outlined-basic" label="Item name" variant="outlined" name='name' required fullWidth sx={{ marginBottom: '8px' }} value={itemName} onChange={e => setItemName(e.target.value)} />
-                                    </div>
-                                    <div>
-                                        <TextField id="outlined-basic" label="Description" variant="outlined" name='description' required fullWidth sx={{ marginBottom: '8px' }} value={description} onChange={e => setDescription(e.target.value)} />
-                                    </div>
+                                                <Button
+                                                    variant="contained"
+                                                    component="label"
+                                                >
+                                                    Upload File
+                                                    <input id='image' type="file" accept="image/*" hidden />
+                                                </Button>
+                                            </div>
+                                            <div>
+                                                <TextField id="outlined-basic" label="Item name" variant="outlined" name='name' required fullWidth sx={{ marginBottom: '8px' }} value={itemName} onChange={e => setItemName(e.target.value)} />
+                                            </div>
+                                            <div>
+                                                <TextField id="outlined-basic" label="Description" variant="outlined" name='description' required fullWidth sx={{ marginBottom: '8px' }} value={description} onChange={e => setDescription(e.target.value)} />
+                                            </div>
 
-                                    <div>
-                                        <TextField type='number' id="outlined-basic" label="Price ($)" variant="outlined" name='price' required fullWidth sx={{ marginBottom: '8px' }} value={price} onChange={e => setPrice(e.target.value)} />
-                                    </div>
-                                    <div>
-                                        <TextField type='number' id="outlined-basic" label="Quantity" variant="outlined" name='quantity' required fullWidth sx={{ marginBottom: '8px' }} value={quantity} onChange={e => setQuantity(e.target.value)} />
-                                    </div>
-                                    <div>
-                                        <Button
-                                            type="submit"
-                                            variant="contained"
-                                            color="primary"
+                                            <div>
+                                                <TextField type='number' id="outlined-basic" label="Price ($)" variant="outlined" name='price' required fullWidth sx={{ marginBottom: '8px' }} value={price} onChange={e => setPrice(e.target.value)} />
+                                            </div>
+                                            <div>
+                                                <TextField type='number' id="outlined-basic" label="Quantity" variant="outlined" name='quantity' required fullWidth sx={{ marginBottom: '8px' }} value={quantity} onChange={e => setQuantity(e.target.value)} />
+                                            </div>
+                                            <div>
+                                                <Button
+                                                    type="submit"
+                                                    variant="contained"
+                                                    color="primary"
 
-                                        >
-                                            Submit
-                                        </Button>
-                                    </div>
-                                    {/* <input type='submit' /> */}
-                                </form >
+                                                >
+                                                    Submit
+                                                </Button>
+                                            </div>
+                                            {/* <input type='submit' /> */}
+                                        </form >
+                                    </Box>
+                                </Container>
                                 <Button
                                     variant="outlined"
                                     color="secondary"
