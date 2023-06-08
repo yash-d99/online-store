@@ -6,8 +6,7 @@ const dataSlice = createSlice({
     totalPrice: 0, totalQuantity:0},
   reducers: {
     loadData: (state, action) => {
-       console.log("DIspatched")
-       console.log(action.payload)
+     
        return  action.payload
 
       

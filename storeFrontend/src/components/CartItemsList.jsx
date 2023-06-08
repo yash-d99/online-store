@@ -27,6 +27,9 @@ export default function CartItems() {
             onAdd={()=>{
               dispatch(dataSlices.addItemToCart({name:doc.name,price:doc.price,id:doc.id}))
             }}
+            onRemove={()=>{
+              dispatch(dataSlices.removeItemFromCart(doc.id))
+            }}
             
          
           />
