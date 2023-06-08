@@ -18,6 +18,7 @@ export default function CartItems() {
       </div>
       {items.map((doc) => (
         <div key={doc.id}>
+          {console.log(doc)}
           <CartItem
             id={doc.id}
             product={doc.name}
