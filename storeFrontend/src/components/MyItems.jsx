@@ -163,6 +163,7 @@ function MyItems() {
                       minHeight="100vh"
                     >
                       <form style={formStyles} onSubmit={onSelectFile}>
+                        <h1>Add an item to sell</h1>
                         <div>
                           {/* <label>
                                     Upload a picture of the item:
@@ -170,7 +171,7 @@ function MyItems() {
                                 </label> */}
 
                           <Button variant="contained" component="label">
-                            Upload File
+                            Upload Image
                             <input
                               id="image"
                               type="file"
@@ -178,6 +179,7 @@ function MyItems() {
                               hidden
                             />
                           </Button>
+                          <br />
                         </div>
                         <div>
                           <TextField
@@ -244,16 +246,17 @@ function MyItems() {
                           </Button>
                         </div>
                         {/* <input type='submit' /> */}
+                        <br />
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          startIcon={<CancelIcon />}
+                          onClick={closeForm}
+                        >
+                          Cancel
+                        </Button>
                       </form>
                     </Box>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      startIcon={<CancelIcon />}
-                      onClick={closeForm}
-                    >
-                      Cancel
-                    </Button>{" "}
                   </Container>
                 </CardContent>
               </div>
