@@ -9,7 +9,9 @@ const dataSlice = createSlice({
     },
     addItemToCart(state, action) {
       const newItem = action.payload;
-      const existingItem = state.items.find((item) => item.id === newItem.id);
+      const existingItem = state.items.find(
+        (item) => item.id === newItem.itemId
+      );
       state.totalQuantity++;
       state.totalPrice += newItem.price;
 
