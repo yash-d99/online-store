@@ -116,7 +116,14 @@ function MyItems() {
     };
 
     return (
-        <div>
+        <Grid container >
+        <CardContent
+        sx={{
+            marginLeft:"45vw",
+            display:"flex",
+          justifyContent: "center",
+        }}
+      >
             {!render ?
                 (<CircularProgress size={24} color="inherit" />) : (
                     <div>
@@ -217,7 +224,8 @@ function MyItems() {
                         }
                     </div>
                 )}
-        </div>
+        </CardContent>
+  </Grid>
     );
 
 }
