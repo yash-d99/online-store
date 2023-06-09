@@ -3,12 +3,24 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from '@mui/material/CardMedia';
 import { Card } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import {useState, useEffect} from "react"
 const ItemPage=()=>{
-
+  const [cardData, setCardData]=useState([])
 
     return (
         <>
         <Grid container>
+        <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              justifyContent: "center",
+             
+            }}
+          >
         <CardContent
             sx={{
               display: "flex",
@@ -64,6 +76,31 @@ const ItemPage=()=>{
  </Card>
  
             
+          </CardContent>
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              height: "100%",
+              justifyContent: "center",
+             
+            }}
+          >
+          <Button  variant="contained" sx={{backgroundColor:"#3498ca", color:"#FFFFFF", fontWeight:"bold", width:"13vw", borderRadius:"25px"}}>Add to Cart <ShoppingBasketIcon sx={{marginLeft:"0.5vw"}}/></Button>
+          </CardContent>
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              height: "100%",
+              justifyContent: "center",
+             
+            }}
+          >
+          <Button  variant="contained" sx={{backgroundColor:"#0053A0", color:"#FFFFFF", fontWeight:"bold", width:"13vw", borderRadius:"25px",   marginTop:"-2vh"
+}}>Buy it now</Button>
+          </CardContent>
+
           </CardContent>
 
 
