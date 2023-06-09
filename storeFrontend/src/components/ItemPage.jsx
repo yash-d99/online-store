@@ -6,9 +6,34 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {useState, useEffect} from "react"
+import axios from "axios";
+
 const ItemPage=()=>{
   const [cardData, setCardData]=useState([])
 
+
+  useEffect(()=>{
+
+
+
+
+    const getItem=async()=>{
+
+        try{
+           const res= await axios.get("http://localhost:3000/products/getItem?email=dubey.yash2@gmail.com&id=2db9a1c9-682a-4343-8baf-eea84a3395d9")
+            console.log(res.data)
+        }catch(error){
+            console.log(error)
+        }
+
+    }
+    getItem()
+
+
+
+
+
+  })
     return (
         <>
         <Grid container>
