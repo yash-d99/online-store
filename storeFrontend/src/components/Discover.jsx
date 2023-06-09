@@ -39,14 +39,12 @@ export default function Discover() {
   }, []);
   // Render the card for one item
   function renderCard(item) {
-    
-    const id=item.itemId 
-    const email=item.email
-    console.log(id)
-    console.log(item)
-    const nav=`/navigation/itemPage/ ${email}/${id}`
+    const id = item.itemId;
+    const email = item.email;
+    console.log(id);
+    console.log(item);
+    const nav = `/navigation/itemPage/ ${email}/${id}`;
     return (
-      <Link to={nav}>
       <Card sx={{ border: "3px solid black" }}>
         <CardMedia
           sx={{ height: 200 }}
@@ -78,11 +76,13 @@ export default function Discover() {
             >
               Add to cart
             </Button>
+            <Button size="small" component={Link} to={nav}>
+              Go to item
+            </Button>
           </CardActions>
         )}
         {isLoading && <CircularProgress color="success" />}
       </Card>
-      </Link>
     );
   }
 
@@ -116,7 +116,12 @@ export default function Discover() {
   };
 
   return (
-    <div style={{ marginTop: sized.width < 600 ? "20vh" : "4vh", marginBottom:"4vh" }}>
+    <div
+      style={{
+        marginTop: sized.width < 600 ? "20vh" : "4vh",
+        marginBottom: "4vh",
+      }}
+    >
       <div>
         <TextField
           align-items="center"
