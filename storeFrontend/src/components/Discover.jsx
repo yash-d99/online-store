@@ -18,6 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { dataSlices } from "../Store/dataSlice";
+import { Link } from "react-router-dom";
 export default function Discover() {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
@@ -38,7 +39,14 @@ export default function Discover() {
   }, []);
   // Render the card for one item
   function renderCard(item) {
+    
+    const id=item.itemId 
+    const email=item.email
+    console.log(id)
+    console.log(item)
+    const nav=`/navigation/itemPage/ ${email}/${id}`
     return (
+      <Link to={nav}>
       <Card sx={{ border: "3px solid black" }}>
         <CardMedia
           sx={{ height: 200 }}
@@ -74,6 +82,7 @@ export default function Discover() {
         )}
         {isLoading && <CircularProgress color="success" />}
       </Card>
+      </Link>
     );
   }
 

@@ -7,9 +7,19 @@ import Button from "@mui/material/Button";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import {useState, useEffect} from "react"
 import axios from "axios";
+import { CircularProgress } from '@mui/material';
+import { dataSlices } from "../Store/dataSlice";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const ItemPage=()=>{
-  const [cardData, setCardData]=useState([])
+console.log("dsfasdf")
+    const {id, email}=useParams()
+
+     const newemail=decodeURIComponent(email).trim()
+    console.log(newemail)
+
+  const [cardData, setCardData]=useState(undefined)
 
 
   useEffect(()=>{
@@ -20,8 +30,8 @@ const ItemPage=()=>{
     const getItem=async()=>{
 
         try{
-           const res= await axios.get("http://localhost:3000/products/getItem?email=dubey.yash2@gmail.com&id=2db9a1c9-682a-4343-8baf-eea84a3395d9")
-            console.log(res.data)
+           const res= await axios.get(`http://localhost:3000/products/getItem?email=${newemail}&id=${id}`)
+           setCardData(res.data)
         }catch(error){
             console.log(error)
         }
@@ -33,10 +43,11 @@ const ItemPage=()=>{
 
 
 
-  })
+  },[])
     return (
         <>
-        <Grid container>
+
+        {cardData===undefined?<CircularProgress/>: <Grid container justifyContent="center" alignItems="center"> 
         <CardContent
             sx={{
               display: "flex",
@@ -55,13 +66,13 @@ const ItemPage=()=>{
              
             }}
           >
-            <Card  style={{width:"40vw", height:"50vh"}}>
-  <img
-         style={{width:"50vw", height:"50vh"}}
-          // replace this with the image that will be added to the cloud
-          src="https://media-cldnry.s-nbcnews.com/image/upload/rockcms/2023-06/230607-lionel-messi-jm-1554-24c14d.jpg"
-          title="item image"
-        /></Card>
+          <Card style={{ width: "40vw", maxHeight: "50vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <img
+      style={{ maxWidth: "100%", maxHeight: "100%" }}
+      src={cardData.imageLink}
+      alt="item image"
+    />
+  </Card>
       <Card  style={{width:"60vw", maxHeight:"100vh"}}>
       <Typography
                     sx={{
@@ -72,7 +83,7 @@ const ItemPage=()=>{
                     variant="h1"
                    
                   >
-                   SOME RANDOM TEXT
+                   {cardData.name}
                   </Typography>
                   <Typography
                     sx={{
@@ -83,7 +94,7 @@ const ItemPage=()=>{
                     variant="h3"
                    
                   >
-                   Price
+                   Price: <strong>${cardData.price}</strong>
                   </Typography>
                   <Typography
                     sx={{
@@ -94,7 +105,7 @@ const ItemPage=()=>{
                     variant="h4"
                    
                   >
-                  Description
+                 Description: {cardData.description}
                   </Typography>
  
  
@@ -132,7 +143,9 @@ const ItemPage=()=>{
         </Grid>
         
         
+        }
         </>
+       
     )
 
 }
