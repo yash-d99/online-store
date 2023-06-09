@@ -8,16 +8,25 @@ const dataSlice = createSlice({
       return action.payload;
     },
     addItemToCart(state, action) {
+        console.log("PAYLOAD")
+        console.log(action.payload)
+        let x=undefined
+       
       const newItem = action.payload;
+      if (newItem.itemId){
+        x=newItem.itemId
+      }else{
+        x=newItem.id
+      }
       const existingItem = state.items.find(
-        (item) => item.id === newItem.itemId
+        (item) => item.id === x
       );
       state.totalQuantity++;
       state.totalPrice += newItem.price;
 
       if (!existingItem) {
         state.items.push({
-          id: newItem.itemId,
+          id: x,
           price: newItem.price,
           quantity: 1,
           totalPrice: newItem.price,

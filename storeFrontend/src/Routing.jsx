@@ -32,7 +32,9 @@ const Routing = () => {
           <Route path="home" element={<HomePage />} />
           <Route path="discover" element={<Discover />} />
           <Route path="myitems" element={<MyItems />} />
+
           <Route path="itemPage/:email/:id" element={<ItemPage />} />
+
 
         </Route>
       </Routes>

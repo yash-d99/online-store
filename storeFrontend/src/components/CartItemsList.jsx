@@ -18,19 +18,18 @@ export default function CartItems() {
       </div>
       {items.map((doc) => (
         <div key={doc.id}>
-          {console.log(doc)}
+          {console.log(doc.id)}
           <CartItem
+          
             id={doc.id}
             product={doc.name}
             price={doc.price}
             quantity={doc.quantity}
             onAdd={() => {
               dispatch(
-                dataSlices.addItemToCart({
-                  name: doc.name,
-                  price: doc.price,
-                  id: doc.id,
-                })
+                dataSlices.addItemToCart(
+                doc
+                )
               );
             }}
             onRemove={() => {
