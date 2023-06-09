@@ -13,6 +13,27 @@ const {
   getDocs,
 } = require("firebase/firestore");
 
+
+router.get("/getItem",async(req,res,next)=>{
+ const id=req.query.id
+ const email=req.query.email
+
+ const docRef = doc(db, "users", `${email}`);
+ try {
+  const docSnap = await getDoc(docRef);
+  const userData=(docSnap.data());
+
+  indexofid=userData.items.findIndex((item)=>item.itemId===id)
+
+
+  res.json(userData.items[indexofid])
+} catch(error) {
+  console.log(error)
+}
+
+
+})
+
 router.get("/all", async (req, res, next) => {
   let allUsersItems = [];
   let allItems = [];

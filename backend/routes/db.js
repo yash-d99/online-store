@@ -30,6 +30,7 @@ router.post("/add_item", async function (req, res, next) {
   if (docSnap.exists()) {
     await updateDoc(doc(db, "users", email), {
       items: arrayUnion({
+        email:email,
         description: description,
         imageLink: `https://launch23-swe-week3-team6.s3.us-east-2.amazonaws.com/${imageName}`,
         name: itemName,
@@ -43,6 +44,7 @@ router.post("/add_item", async function (req, res, next) {
     await setDoc(doc(db, "users", email), {
       items: [
         {
+          email:email,
           description: description,
           imageLink: `https://launch23-swe-week3-team6.s3.us-east-2.amazonaws.com/${imageName}`,
           name: itemName,
